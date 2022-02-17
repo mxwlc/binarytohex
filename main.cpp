@@ -67,5 +67,6 @@ void addzero(string &number){
 int main(){
 	string test = "010";
 	addzero(test);
-	cout << test;
+	cout << test << "n/";
+	cout << btoh(test) << endl;
 }
