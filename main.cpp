@@ -54,7 +54,7 @@ vector<string> splitnumber(string number, string mode){
 			output.push_back(temp);	
 		}
 	}
-//	reverse(output.begin(),output.end());
+
 	return output;
 }
 
