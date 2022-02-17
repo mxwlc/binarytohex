@@ -4,7 +4,7 @@
 
 using namespace std;
 
-
+//match tables
 //4 binary bits to hex
 string btoh(string number){
 	map<string, string> table;
@@ -56,6 +56,16 @@ string htob(string number){
 }
 
 
+//adds zeros to string thats shorter than 4
+void addzero(string &number){
+	int n = number.length();
+	for(int i = 0; i < (4-n); i++){
+		number.insert(0,"0");
+	}
+}
+
 int main(){
-	cout << btoh("1010");
+	string test = "010";
+	addzero(test);
+	cout << test;
 }
