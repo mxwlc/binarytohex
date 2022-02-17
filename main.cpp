@@ -1,72 +1,86 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
+#include <algorithm>
+
+#include "convertors.h"
 
 using namespace std;
-
-//match tables
-//4 binary bits to hex
-string btoh(string number){
-	map<string, string> table;
-	table["0000"] = "0";
-	table["0001"] = "1";
-	table["0010"] = "2";
-	table["0011"] = "3";
-	table["0100"] = "4";
-	table["0101"] = "5";
-	table["0110"] = "6";
-	table["0111"] = "7";
-	table["1000"] = "8";
-	table["1001"] = "9";
-	table["1010"] = "A";
-	table["1011"] = "B";
-	table["1100"] = "C";
-	table["1101"] = "D";
-	table["1110"] = "E";
-	table["1111"] = "F";
-	if(!table.count(number)){
-		return "Fail";
-	}
-	return table[number];
-}
-
-//hex to 4 bit binary
-string htob(string number){
-	map<string, string> table;
-	table["0"]="0000";
-	table["1"]="0001";
-	table["2"]="0010";
-	table["3"]="0011";
-	table["4"]="0100";
-	table["5"]="0101";
-	table["6"]="0110";
-	table["7"]="0111";
-	table["8"]="1000";
-	table["9"]="1001";
-	table["A"]="1010";
-	table["B"]="1011";
-	table["C"]="1100";
-	table["D"]="1101";
-	table["E"]="1110";
-	table["F"]="1111";
-	if(!table.count(number)){
-		return "Fail";
-	}
-	return table[number];
-}
-
 
 //adds zeros to string thats shorter than 4
 void addzero(string &number){
 	int n = number.length();
-	for(int i = 0; i < (4-n); i++){
-		number.insert(0,"0");
+	int z = n % 4;
+	if(z==0){
+		number = number;
+	}
+	else{
+		for(int i = 0; i < (4-z); i++){
+			number.insert(0,"0");
+		}
 	}
 }
 
+//from vector to output string
+void output(vector<string> number, string mode){
+	if(mode == "B" || mode == "b"){ // binary to hexadecimal
+		for(int i = 0; i < number.size(); i++){
+			cout << btoh(number[i]);
+		}
+	}
+	else if(mode == "H" || mode == "h"){ // hexadecimal to binary
+		for(int i = 0; i < number.size(); i++){
+			cout << htob(number[i]);
+
+		}
+	}
+}
+
+//split number into groups
+vector<string> splitnumber(string number, string mode){
+	vector<string> output;
+	string temp;
+	if(mode == "B" || mode == "b"){ //binary to hexaaecimal
+		int divnum = number.length() / 4;
+		for(int n = 0; n < divnum; n++){
+			temp = number.substr(n*4, 4);
+			output.push_back(temp);
+		}
+	} 
+	else if(mode == "H" || mode == "h"){// hexadecimal to binary
+		for(int n = 0; n < number.length(); n++){
+			temp = number.substr(n,1);
+			output.push_back(temp);	
+		}
+	}
+//	reverse(output.begin(),output.end());
+	return output;
+}
+
+
 int main(){
-	string test = "010";
-	addzero(test);
-	cout << test << "n/";
-	cout << btoh(test) << endl;
+	cout << "Binary to Hexidecimal and Hexidecimal to Binary Convertor" << endl << endl;
+	//TODO: add a FIG header might look cool
+	
+	//Choice between options
+	string choice;
+	while(true){
+		cout << "Do you want to conver from [B]inary to hexadecimal or [H]exadecimal to binary? ";
+		cin >> choice;	
+		if(choice == "B" || choice == "b"){
+			break;
+		}
+		else if(choice == "H" || choice =="h"){
+			break;
+		}
+		cout << "Im sorry thats not a valid choice. " << endl;
+	}
+	cout << "Please insert a number" << endl;	
+	string number;
+	cin >> number;
+
+	vector<string> fours = splitnumber(number, choice);
+	output(fours, choice);
+
 }
