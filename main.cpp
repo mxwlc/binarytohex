@@ -65,7 +65,7 @@ void readtitle(){
 
 	while (getline (infile, myText)) {
 
-  	cout << myText;
+  	cout << myText << endl;
 	}
 }
 int main(){
