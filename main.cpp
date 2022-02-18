@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 #include "convertors.h"
 
@@ -57,12 +58,20 @@ vector<string> splitnumber(string number, string mode){
 
 	return output;
 }
+void readtitle(){
+	ifstream infile;
+    	infile.open("title.txt");
+	string myText;
 
+	while (getline (infile, myText)) {
 
+  	cout << myText;
+	}
+}
 int main(){
-	cout << "Binary to Hexidecimal and Hexidecimal to Binary Convertor" << endl << endl;
-	//TODO: add a FIG header might look cool
-	
+	// cout << "Binary to Hexidecimal and Hexidecimal to Binary Convertor" << endl << endl;
+	//TODO: add a FIG header might look cool	
+	readtitle();
 	//Choice between options
 	string choice;
 	while(true){
